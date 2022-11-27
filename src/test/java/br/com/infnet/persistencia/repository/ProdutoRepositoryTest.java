@@ -32,7 +32,8 @@ public class ProdutoRepositoryTest {
         Produto produtoValidacao = produtoRepository.save(produto);
 
         assertNotNull(produtoValidacao);
-        assertNotNull(produtoValidacao.getId());
+        assertEquals(produto.getId(), produtoValidacao.getId());
+        assertEquals(produto.getCategoria(), produtoValidacao.getCategoria());
     }
 
 //    @Test
