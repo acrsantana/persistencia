@@ -16,6 +16,6 @@ public class Produto {
     private Integer quantidade;
     @OneToMany(mappedBy = "produto")
     private List<ItemPedido> itemPedido;
-//    @ManyToOne
-//    private Categoria categoria;
+    @ManyToOne
+    private Categoria categoria;
 }
