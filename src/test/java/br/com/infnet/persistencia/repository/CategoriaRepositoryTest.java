@@ -12,14 +12,16 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class CategoriaRepositoryTest {
+class CategoriaRepositoryTest {
+
+    //Injeção de dependencia com anotação
     @Autowired
     private CategoriaRepository categoriaRepository;
 
     @Test
-    public void testAdicionaCategoriaComSucesso(){
+    void testAdicionaCategoriaComSucesso(){
         Categoria categoria = new Categoria();
-        categoria.setCategoria("Eletrônicos");
+        categoria.setNome("Eletrônicos");
 
         Categoria categoriaValidacao = categoriaRepository.save(categoria);
 
@@ -28,7 +30,7 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testAtributoCategoriaNaoPodeSerNuloAoSalvarCategoria(){
+    void testAtributoCategoriaNaoPodeSerNuloAoSalvarCategoria(){
         Categoria categoria = new Categoria();
         assertThrowsExactly(
                 DataIntegrityViolationException.class,
@@ -36,22 +38,22 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testBuscarCategoriaPorId(){
+    void testBuscarCategoriaPorId(){
         Categoria categoria = new Categoria();
-        categoria.setCategoria("Livros");
+        categoria.setNome("Livros");
         Categoria save = categoriaRepository.save(categoria);
         Optional<Categoria> categoriaOptional = categoriaRepository.findById(save.getId());
         assertEquals(save.getId(), categoriaOptional.get().getId());
-        assertEquals(save.getCategoria(), categoriaOptional.get().getCategoria());
+        assertEquals(save.getNome(), categoriaOptional.get().getNome());
     }
 
     @Test
-    public void testBuscarTodasAsCategorias(){
+    void testBuscarTodasAsCategorias(){
         Categoria categoria = new Categoria();
         Categoria categoria2 = new Categoria();
-        categoria.setCategoria("Livros");
+        categoria.setNome("Livros");
         categoriaRepository.save(categoria);
-        categoria2.setCategoria("Celulares");
+        categoria2.setNome("Celulares");
         categoriaRepository.save(categoria2);
         List<Categoria> categorias = categoriaRepository.findAll();
         assertNotNull(categorias);
@@ -59,31 +61,31 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
-    public void testAlterarCategoriaCadastrada(){
+    void testAlterarCategoriaCadastrada(){
         Categoria categoria = new Categoria();
-        categoria.setCategoria("Modas");
+        categoria.setNome("Modas");
         categoriaRepository.save(categoria);
-        categoria.setCategoria("Moda");
+        categoria.setNome("Moda");
         Categoria categoriaValidacao = categoriaRepository.saveAndFlush(categoria);
         assertEquals(categoria.getId(), categoriaValidacao.getId());
-        assertEquals(categoria.getCategoria(), categoriaValidacao.getCategoria());
+        assertEquals(categoria.getNome(), categoriaValidacao.getNome());
     }
 
     @Test
-    public void testFalhaAoAlterarCategoriaCadastradaParaNull(){
+    void testFalhaAoAlterarCategoriaCadastradaParaNull(){
         Categoria categoria = new Categoria();
-        categoria.setCategoria("Modas");
+        categoria.setNome("Modas");
         categoriaRepository.save(categoria);
-        categoria.setCategoria(null);
+        categoria.setNome(null);
         assertThrowsExactly(
                 DataIntegrityViolationException.class,
                 () -> categoriaRepository.save(categoria));
     }
 
     @Test
-    public void testSucessoAoDeletarCategoriaPorId(){
+    void testSucessoAoDeletarCategoriaPorId(){
         Categoria categoria = new Categoria();
-        categoria.setCategoria("Brinquedos");
+        categoria.setNome("Brinquedos");
 
         categoriaRepository.save(categoria);
         Long id = categoria.getId();

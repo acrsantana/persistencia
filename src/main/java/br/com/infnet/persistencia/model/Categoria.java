@@ -11,8 +11,8 @@ import java.util.List;
 public class Categoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String categoria;
-    @OneToMany(mappedBy = "categoria")
+    @Column(nullable = false, unique = true)
+    private String nome;
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     private List<Produto> produto;
 }
